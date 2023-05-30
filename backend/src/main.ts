@@ -16,12 +16,14 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Flance - Agreement API')
-    .setDescription('This API is to create decentralized job agreement for ')
+    .setDescription(
+      'This API is to create decentralized job agreement for users',
+    )
     .setVersion('1.0')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('/', app, document);
 
   await app.listen(3000);
   console.log(`Application is running on: ${await app.getUrl()}`);
