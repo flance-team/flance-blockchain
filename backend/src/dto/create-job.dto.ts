@@ -9,4 +9,6 @@ export class CreateJobDto {
   workHourPerWeek: number;
   @ApiProperty()
   totalSalary: number;
+  @ApiProperty()
+  privateKey: string;
 }
