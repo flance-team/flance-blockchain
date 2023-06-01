@@ -4,7 +4,7 @@ FROM node:lts-hydrogen AS build
 WORKDIR /api
 
 # copy deps yang ada di apps ke WORKDIR
-COPY package*.json ./
+COPY ["package*.json", "yarn*.lock", "./"]
 
 RUN yarn install
 
@@ -23,11 +23,11 @@ WORKDIR /api
 
 COPY --from=build ./api/dist ./dist
 
-COPY package*.json ./
+COPY ["package*.json", "yarn*.lock", "./"]
 
 RUN yarn install --production
 
-RUN rm package*.json
+RUN rm ["package*.json", "yarn*.lock"]
 
 EXPOSE 3000
 
