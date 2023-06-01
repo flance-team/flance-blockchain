@@ -20,9 +20,12 @@ async function bootstrap() {
       'This API is to create decentralized job agreement for users',
     )
     .setVersion('1.0')
+    .addTag('contracts')
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, config, {
+    include: [AppModule],
+  });
   SwaggerModule.setup('/', app, document);
 
   await app.listen(3000);

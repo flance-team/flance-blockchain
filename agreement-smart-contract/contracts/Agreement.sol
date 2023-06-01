@@ -3,8 +3,8 @@ pragma solidity ^0.8.9;
 
 contract Agreement {
     uint public no_of_jobs = 0;
-    uint public no_of_jobAgreement = 0;
-    uint public no_of_user = 0;
+    uint public no_of_jobAgreements = 0;
+    uint public no_of_users = 0;
 
     struct Job {
         uint jobId;
@@ -14,7 +14,7 @@ contract Agreement {
         string companyName;
         uint workHourPerWeek;
         uint contractDuration;
-        uint totalSalary;
+        uint salaryPerHour;
         bool statusOpen;
         uint timestamp;
         address employer;
@@ -32,7 +32,7 @@ contract Agreement {
         string userName;
         uint workHourPerWeek;
         uint contractDuration;
-        uint totalSalary;
+        uint salaryPerHour;
         uint timestamp;
         address signedEmployer;
         address signedUser;
@@ -96,7 +96,7 @@ contract Agreement {
         string memory _jobTitle,
         string memory _companyName,
         uint _workHourPerWeek,
-        uint _totalSalary
+        uint _salaryPerHour
     ) public {
         require(msg.sender != address(0));
         no_of_jobs++;
@@ -109,7 +109,7 @@ contract Agreement {
             _companyName,
             _workHourPerWeek,
             0,
-            _totalSalary,
+            _salaryPerHour,
             _statusOpen,
             0,
             msg.sender,
@@ -122,34 +122,34 @@ contract Agreement {
         string memory _userName
     ) public onlyUser(_index) OnlyWhileStatusOpen(_index) {
         require(msg.sender != address(0));
-        no_of_jobAgreement++;
-        no_of_user++;
+        no_of_jobAgreements++;
+        no_of_users++;
 
         Job_by_No[_index].currentUser = msg.sender;
         Job_by_No[_index].timestamp = block.timestamp;
         Job_by_No[_index].statusOpen = false;
         Job_by_No[_index].contractDuration = 7 days;
-        Job_by_No[_index].agreementId = no_of_jobAgreement;
-        Job_by_No[_index].userId = no_of_user;
+        Job_by_No[_index].agreementId = no_of_jobAgreements;
+        Job_by_No[_index].userId = no_of_users;
 
-        JobAgreement_by_No[no_of_jobAgreement] = JobAgreement(
-            no_of_jobAgreement,
+        JobAgreement_by_No[no_of_jobAgreements] = JobAgreement(
+            no_of_jobAgreements,
             _index,
-            no_of_user,
+            no_of_users,
             Job_by_No[_index].jobTitle,
             Job_by_No[_index].companyName,
             _userName,
             Job_by_No[_index].workHourPerWeek,
             7 days,
-            Job_by_No[_index].totalSalary,
+            Job_by_No[_index].salaryPerHour,
             block.timestamp,
             Job_by_No[_index].employer,
             msg.sender
         );
 
-        User_by_No[no_of_user] = User(
-            no_of_user,
-            no_of_jobAgreement,
+        User_by_No[no_of_users] = User(
+            no_of_users,
+            no_of_jobAgreements,
             _index,
             _userName,
             block.timestamp,
@@ -163,34 +163,34 @@ contract Agreement {
         string memory _userName
     ) public onlyUser(_index) OnlyWhileStatusOpen(_index) {
         require(msg.sender != address(0));
-        no_of_jobAgreement++;
-        no_of_user++;
+        no_of_jobAgreements++;
+        no_of_users++;
 
         Job_by_No[_index].currentUser = msg.sender;
         Job_by_No[_index].timestamp = block.timestamp;
         Job_by_No[_index].statusOpen = false;
         Job_by_No[_index].contractDuration = 30 days;
-        Job_by_No[_index].agreementId = no_of_jobAgreement;
-        Job_by_No[_index].userId = no_of_user;
+        Job_by_No[_index].agreementId = no_of_jobAgreements;
+        Job_by_No[_index].userId = no_of_users;
 
-        JobAgreement_by_No[no_of_jobAgreement] = JobAgreement(
-            no_of_jobAgreement,
+        JobAgreement_by_No[no_of_jobAgreements] = JobAgreement(
+            no_of_jobAgreements,
             _index,
-            no_of_user,
+            no_of_users,
             Job_by_No[_index].jobTitle,
             Job_by_No[_index].companyName,
             _userName,
             Job_by_No[_index].workHourPerWeek,
             30 days,
-            Job_by_No[_index].totalSalary,
+            Job_by_No[_index].salaryPerHour,
             block.timestamp,
             Job_by_No[_index].employer,
             msg.sender
         );
 
-        User_by_No[no_of_user] = User(
-            no_of_user,
-            no_of_jobAgreement,
+        User_by_No[no_of_users] = User(
+            no_of_users,
+            no_of_jobAgreements,
             _index,
             _userName,
             block.timestamp,
@@ -204,34 +204,34 @@ contract Agreement {
         string memory _userName
     ) public onlyUser(_index) OnlyWhileStatusOpen(_index) {
         require(msg.sender != address(0));
-        no_of_jobAgreement++;
-        no_of_user++;
+        no_of_jobAgreements++;
+        no_of_users++;
 
         Job_by_No[_index].currentUser = msg.sender;
         Job_by_No[_index].timestamp = block.timestamp;
         Job_by_No[_index].statusOpen = false;
         Job_by_No[_index].contractDuration = 180 days;
-        Job_by_No[_index].agreementId = no_of_jobAgreement;
-        Job_by_No[_index].userId = no_of_user;
+        Job_by_No[_index].agreementId = no_of_jobAgreements;
+        Job_by_No[_index].userId = no_of_users;
 
-        JobAgreement_by_No[no_of_jobAgreement] = JobAgreement(
-            no_of_jobAgreement,
+        JobAgreement_by_No[no_of_jobAgreements] = JobAgreement(
+            no_of_jobAgreements,
             _index,
-            no_of_user,
+            no_of_users,
             Job_by_No[_index].jobTitle,
             Job_by_No[_index].companyName,
             _userName,
             Job_by_No[_index].workHourPerWeek,
             180 days,
-            Job_by_No[_index].totalSalary,
+            Job_by_No[_index].salaryPerHour,
             block.timestamp,
             Job_by_No[_index].employer,
             msg.sender
         );
 
-        User_by_No[no_of_user] = User(
-            no_of_user,
-            no_of_jobAgreement,
+        User_by_No[no_of_users] = User(
+            no_of_users,
+            no_of_jobAgreements,
             _index,
             _userName,
             block.timestamp,

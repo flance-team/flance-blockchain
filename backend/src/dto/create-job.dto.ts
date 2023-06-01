@@ -8,7 +8,5 @@ export class CreateJobDto {
   @ApiProperty()
   workHourPerWeek: number;
   @ApiProperty()
-  totalSalary: number;
-  @ApiProperty()
-  privateKey: string;
+  salaryPerHour: number;
 }
