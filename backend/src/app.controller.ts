@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Headers, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Headers,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateJobDto } from 'src/dto/create-job.dto';
 import { CreateAndSignAgreementDto } from 'src/dto/create-and-sign-agreement-dto';
@@ -10,8 +18,13 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('/wallets')
-  getCreateWallet(): Promise<object> {
-    return this.appService.getCreateWallet();
+  createWallet(): Promise<object> {
+    return this.appService.createWallet();
+  }
+
+  @Get('/balances')
+  balance(@Query('walletAddress') walletAddress: string): Promise<object> {
+    return this.appService.balance(walletAddress);
   }
 
   @Post('/jobs')
