@@ -6,11 +6,14 @@ import derivedAddress from 'src/utils/derivedAddress';
 import generateMnemonic from 'src/utils/generateMnemonic';
 import * as agreementContractJSON from './assets/Agreement.json';
 import { CreateAndSignAgreementDto } from 'src/dto/create-and-sign-agreement-dto';
+import depositAVAX from 'src/utils/depositAVAX';
+import checkBalance from 'src/utils/checkBalance';
 
 @Injectable()
 export class AppService {
   provider: ethers.providers.Provider;
   agreementContract: ethers.Contract;
+  ownerPrivateKey: string;
 
   constructor(private readonly configService: ConfigService) {
     this.provider = new ethers.providers.JsonRpcProvider(
@@ -22,13 +25,27 @@ export class AppService {
       agreementContractJSON.abi,
       this.provider,
     );
+
+    this.ownerPrivateKey = this.configService.get('OWNER_PRIVATE_KEY');
   }
 
-  async getCreateWallet(): Promise<object> {
+  async createWallet(): Promise<object> {
     const mnemonic = await generateMnemonic();
     const walletAddress = derivedAddress(mnemonic);
+    const depositHash = await depositAVAX(
+      this.provider,
+      '0.01',
+      walletAddress.cAddresses[0],
+      this.ownerPrivateKey,
+    );
 
-    return { mnemonic, walletAddress };
+    return { mnemonic, walletAddress, depositHash };
+  }
+
+  async balance(walletAddress: string): Promise<any> {
+    const balance = Number(await checkBalance(this.provider, walletAddress));
+
+    return { balance };
   }
 
   async createJob(
