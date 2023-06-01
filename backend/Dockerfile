@@ -27,7 +27,8 @@ COPY ["package*.json", "yarn*.lock", "./"]
 
 RUN yarn install --production
 
-RUN rm ["package*.json", "yarn*.lock"]
+RUN rm package*.json
+RUN rm yarn*.lock
 
 EXPOSE 3000
 
