@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateAndSignAgreementDto {
   @ApiProperty()
-  jobId: number;
+  jobBlockchainId: number;
   @ApiProperty()
   userName: string;
   @ApiProperty({

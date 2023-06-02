@@ -119,7 +119,7 @@ describe('AppController and AppService', () => {
         )
         .then((val) => {
           expect(val).toBeDefined();
-          expect(val).toHaveProperty('jobId');
+          expect(val).toHaveProperty('jobBlockchainId');
           expect(val).toHaveProperty('agreementId');
           expect(val).toHaveProperty('userId');
           expect(val).toHaveProperty('jobTitle');
@@ -139,7 +139,11 @@ describe('AppController and AppService', () => {
       appController
         .createAndSignAgreement(
           '6d5683e1c1edf8836c6a8030f71af229604af0f895ed37179b3e0e8c740203ec',
-          { jobId: 6, userName: 'testing user', contractDuration: 180 },
+          {
+            jobBlockchainId: 6,
+            userName: 'testing user',
+            contractDuration: 180,
+          },
         )
         .then((val) => {
           expect(val).toBeDefined();
@@ -149,12 +153,12 @@ describe('AppController and AppService', () => {
     it('create and sign agreement 7 days should have property agreementBlockchainId', () => {
       appService
         .createAndSignAgreement(
-          { jobId: 1, userName: 'testing user', contractDuration: 7 },
+          { jobBlockchainId: 1, userName: 'testing user', contractDuration: 7 },
           '37986f12c7e96143663ead22a70631aa8b1032e923919010c0dd4ae38a076c5d',
         )
         .then((val) => {
           expect(val).toBeDefined();
-          expect(val).toHaveProperty('jobId');
+          expect(val).toHaveProperty('jobBlockchainId');
           expect(val).toHaveProperty('userName');
           expect(val).toHaveProperty('hash');
           expect(val).toHaveProperty('agreementBlockchainId');
@@ -165,12 +169,16 @@ describe('AppController and AppService', () => {
     it('create and sign agreement 30 days should have property agreementBlockchainId', () => {
       appService
         .createAndSignAgreement(
-          { jobId: 3, userName: 'testing user', contractDuration: 30 },
+          {
+            jobBlockchainId: 3,
+            userName: 'testing user',
+            contractDuration: 30,
+          },
           '37986f12c7e96143663ead22a70631aa8b1032e923919010c0dd4ae38a076c5d',
         )
         .then((val) => {
           expect(val).toBeDefined();
-          expect(val).toHaveProperty('jobId');
+          expect(val).toHaveProperty('jobBlockchainId');
           expect(val).toHaveProperty('userName');
           expect(val).toHaveProperty('hash');
           expect(val).toHaveProperty('agreementBlockchainId');
@@ -181,12 +189,16 @@ describe('AppController and AppService', () => {
     it('create and sign agreement 180 days should have property agreementBlockchainId', () => {
       appService
         .createAndSignAgreement(
-          { jobId: 6, userName: 'testing user', contractDuration: 180 },
+          {
+            jobBlockchainId: 6,
+            userName: 'testing user',
+            contractDuration: 180,
+          },
           '37986f12c7e96143663ead22a70631aa8b1032e923919010c0dd4ae38a076c5d',
         )
         .then((val) => {
           expect(val).toBeDefined();
-          expect(val).toHaveProperty('jobId');
+          expect(val).toHaveProperty('jobBlockchainId');
           expect(val).toHaveProperty('userName');
           expect(val).toHaveProperty('hash');
           expect(val).toHaveProperty('agreementBlockchainId');
@@ -213,7 +225,7 @@ describe('AppController and AppService', () => {
         )
         .then((val) => {
           expect(val).toBeDefined();
-          expect(val).toHaveProperty('agreementId');
+          expect(val).toHaveProperty('agreementBlockchainId');
           expect(val).toHaveProperty('jobId');
           expect(val).toHaveProperty('userId');
           expect(val).toHaveProperty('jobTitle');
@@ -247,7 +259,7 @@ describe('AppController and AppService', () => {
         )
         .then((val) => {
           expect(val).toBeDefined();
-          expect(val).toHaveProperty('userId');
+          expect(val).toHaveProperty('userBlockchainId');
           expect(val).toHaveProperty('jobId');
           expect(val).toHaveProperty('agreementId');
           expect(val).toHaveProperty('userName');

@@ -35,12 +35,12 @@ export class AppController {
     return this.appService.createJob(createJobDto, employerPrivateKey);
   }
 
-  @Get('/jobs/:jobId')
+  @Get('/jobs/:jobBlockchainId')
   readJobById(
     @Headers('publicPrivateKey') publicPrivateKey: string,
-    @Param('jobId') jobId: string,
+    @Param('jobBlockchainId') jobBlockchainId: string,
   ): Promise<object> {
-    return this.appService.readJobById(jobId, publicPrivateKey);
+    return this.appService.readJobById(jobBlockchainId, publicPrivateKey);
   }
 
   @Post('/agreements')
@@ -54,19 +54,22 @@ export class AppController {
     );
   }
 
-  @Get('/agreements/:agreementId')
+  @Get('/agreements/:agreementBlockchainId')
   readAgreementById(
     @Headers('publicPrivateKey') publicPrivateKey: string,
-    @Param('agreementId') agreementId: string,
+    @Param('agreementBlockchainId') agreementBlockchainId: string,
   ): Promise<object> {
-    return this.appService.readAgreementById(agreementId, publicPrivateKey);
+    return this.appService.readAgreementById(
+      agreementBlockchainId,
+      publicPrivateKey,
+    );
   }
 
-  @Get('/users/:userId')
+  @Get('/users/:userBlockchainId')
   readUserById(
     @Headers('publicPrivateKey') publicPrivateKey: string,
-    @Param('userId') userId: string,
+    @Param('userBlockchainId') userBlockchainId: string,
   ): Promise<object> {
-    return this.appService.readUserById(userId, publicPrivateKey);
+    return this.appService.readUserById(userBlockchainId, publicPrivateKey);
   }
 }

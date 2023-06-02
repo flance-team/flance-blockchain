@@ -83,14 +83,17 @@ export class AppService {
     };
   }
 
-  async readJobById(jobId: string, privateKey: string): Promise<object> {
+  async readJobById(
+    jobBlockchainId: string,
+    privateKey: string,
+  ): Promise<object> {
     const wallet = new ethers.Wallet(privateKey, this.provider);
     const signer = wallet.connect(this.provider);
     const agreementContractAddress = this.agreementContract.connect(signer);
-    const readJob = await agreementContractAddress.Job_by_No(+jobId);
+    const readJob = await agreementContractAddress.Job_by_No(+jobBlockchainId);
 
     return {
-      jobId,
+      jobBlockchainId,
       agreementId: ethers.utils.formatUnits(readJob.agreementId, 0),
       userId: ethers.utils.formatUnits(readJob.userId, 0),
       jobTitle: readJob.jobTitle,
@@ -108,7 +111,8 @@ export class AppService {
     createAndSignAgreementDto: CreateAndSignAgreementDto,
     privateKey: string,
   ): Promise<object> {
-    const { jobId, userName, contractDuration } = createAndSignAgreementDto;
+    const { jobBlockchainId, userName, contractDuration } =
+      createAndSignAgreementDto;
     const wallet = new ethers.Wallet(privateKey, this.provider);
     const signer = wallet.connect(this.provider);
     const agreementContractAddress = this.agreementContract.connect(signer);
@@ -119,21 +123,21 @@ export class AppService {
       case 7:
         agreement =
           await agreementContractAddress.createAndSignAgreementFor7Days(
-            jobId,
+            jobBlockchainId,
             userName,
           );
         break;
       case 30:
         agreement =
           await agreementContractAddress.createAndSignAgreementFor30Days(
-            jobId,
+            jobBlockchainId,
             userName,
           );
         break;
       case 180:
         agreement =
           await agreementContractAddress.createAndSignAgreementFor180Days(
-            jobId,
+            jobBlockchainId,
             userName,
           );
         break;
@@ -151,7 +155,7 @@ export class AppService {
     );
 
     return {
-      jobId,
+      jobBlockchainId,
       userName,
       hash: agreement.hash,
       agreementBlockchainId,
@@ -160,18 +164,18 @@ export class AppService {
   }
 
   async readAgreementById(
-    agreementId: string,
+    agreementBlockchainId: string,
     privateKey: string,
   ): Promise<object> {
     const wallet = new ethers.Wallet(privateKey, this.provider);
     const signer = wallet.connect(this.provider);
     const agreementContractAddress = this.agreementContract.connect(signer);
     const readAgreement = await agreementContractAddress.JobAgreement_by_No(
-      +agreementId,
+      +agreementBlockchainId,
     );
 
     return {
-      agreementId,
+      agreementBlockchainId,
       jobId: ethers.utils.formatUnits(readAgreement.jobId, 0),
       userId: ethers.utils.formatUnits(readAgreement.userId, 0),
       jobTitle: readAgreement.jobTitle,
@@ -192,14 +196,19 @@ export class AppService {
     };
   }
 
-  async readUserById(userId: string, privateKey: string): Promise<object> {
+  async readUserById(
+    userBlockchainId: string,
+    privateKey: string,
+  ): Promise<object> {
     const wallet = new ethers.Wallet(privateKey, this.provider);
     const signer = wallet.connect(this.provider);
     const agreementContractAddress = this.agreementContract.connect(signer);
-    const readUser = await agreementContractAddress.User_by_No(+userId);
+    const readUser = await agreementContractAddress.User_by_No(
+      +userBlockchainId,
+    );
 
     return {
-      userId,
+      userBlockchainId,
       jobId: ethers.utils.formatUnits(readUser.jobId, 0),
       agreementId: ethers.utils.formatUnits(readUser.agreementId, 0),
       userName: readUser.userName,
