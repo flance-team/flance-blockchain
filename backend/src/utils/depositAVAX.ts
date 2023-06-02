@@ -13,9 +13,9 @@ const depositAVAX = async (
     value: ethers.utils.parseEther(amountInAVAX),
   };
 
-  const txResponse = await wallet.sendTransaction(tx);
+  const { hash } = await wallet.sendTransaction(tx);
 
-  return txResponse.hash;
+  return hash;
 };
 
 export default depositAVAX;

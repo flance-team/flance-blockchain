@@ -52,14 +52,6 @@ contract Agreement {
 
     mapping(uint => User) public User_by_No;
 
-    modifier onlyEmployer(uint _index) {
-        require(
-            msg.sender == Job_by_No[_index].employer,
-            "Only Employer can access this"
-        );
-        _;
-    }
-
     modifier onlyUser(uint _index) {
         require(
             msg.sender != Job_by_No[_index].employer,
@@ -73,22 +65,6 @@ contract Agreement {
             Job_by_No[_index].statusOpen == true,
             "Job is currently Closed."
         );
-        _;
-    }
-
-    modifier AgreementTimesUp(uint _index) {
-        uint _AgreementNo = Job_by_No[_index].agreementId;
-        uint time = JobAgreement_by_No[_AgreementNo].timestamp +
-            JobAgreement_by_No[_AgreementNo].contractDuration;
-        require(block.timestamp < time, "Agreement already Ended");
-        _;
-    }
-
-    modifier AgreementTimesLeft(uint _index) {
-        uint _AgreementNo = Job_by_No[_index].agreementId;
-        uint time = JobAgreement_by_No[_AgreementNo].timestamp +
-            JobAgreement_by_No[_AgreementNo].contractDuration;
-        require(block.timestamp > time, "Time is left for contract to end");
         _;
     }
 
@@ -238,23 +214,5 @@ contract Agreement {
             Job_by_No[_index].employer,
             msg.sender
         );
-    }
-
-    function agreementCompleted(
-        uint _index
-    ) public onlyEmployer(_index) AgreementTimesUp(_index) {
-        require(msg.sender != address(0));
-        require(
-            Job_by_No[_index].statusOpen == false,
-            "Job is currently Closed."
-        );
-        Job_by_No[_index].statusOpen = true;
-    }
-
-    function agreementTerminated(
-        uint _index
-    ) public onlyEmployer(_index) AgreementTimesLeft(_index) {
-        require(msg.sender != address(0));
-        Job_by_No[_index].statusOpen = true;
     }
 }
