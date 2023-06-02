@@ -8,8 +8,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { AppService } from './app.service';
-import { CreateJobDto } from 'src/dto/create-job.dto';
-import { CreateAndSignAgreementDto } from 'src/dto/create-and-sign-agreement-dto';
+import { CreateJobDto } from './dto/create-job.dto';
+import { CreateAndSignAgreementDto } from './dto/create-and-sign-agreement-dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('contracts')

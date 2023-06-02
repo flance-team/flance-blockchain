@@ -1,13 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Inject, Injectable } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
 import { ethers } from 'ethers';
-import { CreateJobDto } from 'src/dto/create-job.dto';
-import derivedAddress from 'src/utils/derivedAddress';
-import generateMnemonic from 'src/utils/generateMnemonic';
+import { CreateJobDto } from './dto/create-job.dto';
+import derivedAddress from './utils/derivedAddress';
+import generateMnemonic from './utils/generateMnemonic';
 import * as agreementContractJSON from './assets/Agreement.json';
-import { CreateAndSignAgreementDto } from 'src/dto/create-and-sign-agreement-dto';
-import depositAVAX from 'src/utils/depositAVAX';
-import checkBalance from 'src/utils/checkBalance';
+import { CreateAndSignAgreementDto } from './dto/create-and-sign-agreement-dto';
+import depositAVAX from './utils/depositAVAX';
+import checkBalance from './utils/checkBalance';
+import infuraConfig from './config/testing.config';
 
 @Injectable()
 export class AppService {
@@ -15,18 +16,21 @@ export class AppService {
   agreementContract: ethers.Contract;
   ownerPrivateKey: string;
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    @Inject(infuraConfig.KEY)
+    private config: ConfigType<typeof infuraConfig>,
+  ) {
     this.provider = new ethers.providers.JsonRpcProvider(
-      this.configService.get('INFURA_API_URL'),
+      this.config.INFURA_API_URL,
     );
 
     this.agreementContract = new ethers.Contract(
-      this.configService.get('TOKEN_CONTRACT_ADDRESS'),
+      this.config.TOKEN_CONTRACT_ADDRESS,
       agreementContractJSON.abi,
       this.provider,
     );
 
-    this.ownerPrivateKey = this.configService.get('OWNER_PRIVATE_KEY');
+    this.ownerPrivateKey = this.config.OWNER_PRIVATE_KEY;
   }
 
   async createWallet(): Promise<object> {
@@ -43,7 +47,7 @@ export class AppService {
   }
 
   async balance(walletAddress: string): Promise<any> {
-    const balance = Number(await checkBalance(this.provider, walletAddress));
+    const balance = await checkBalance(this.provider, walletAddress);
 
     return { balance };
   }
