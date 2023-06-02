@@ -5,10 +5,9 @@ const checkBalance = async (
   address: string,
 ): Promise<any> => {
   const balance = await provider.getBalance(address);
-
   const balanceInAvax = ethers.utils.formatEther(balance);
 
-  return balanceInAvax;
+  return +balanceInAvax;
 };
 
 export default checkBalance;
