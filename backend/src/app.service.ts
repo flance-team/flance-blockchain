@@ -34,7 +34,7 @@ export class AppService {
     const walletAddress = derivedAddress(mnemonic);
     const depositHash = await depositAVAX(
       this.provider,
-      '0.01',
+      '0.1',
       walletAddress.cAddresses[0],
       this.ownerPrivateKey,
     );
