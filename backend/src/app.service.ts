@@ -149,10 +149,11 @@ export class AppService {
         0,
       ) + 1;
 
-    const userBlockchainId = ethers.utils.formatUnits(
-      await agreementContractAddress.no_of_users(),
-      0,
-    );
+    const userBlockchainId =
+      +ethers.utils.formatUnits(
+        await agreementContractAddress.no_of_users(),
+        0,
+      ) + 1;
 
     return {
       jobBlockchainId,
